@@ -50,7 +50,7 @@ def gen_markup():
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    msg = bot.send_message(message.chat.id, "Добро пожаловать, введите группу (Пример КТбо2-3)")
+    msg = bot.send_message(message.chat.id, "Добро пожаловать, введите группу (Например КТбо2-3)")
     bot.register_next_step_handler(msg, reg_user)
 
 def reg_user(message):
@@ -68,27 +68,25 @@ def reg_user(message):
     chat_id = message.chat.id
 
     if data['success'] == 'true':
-        text = 'Все окей'
+        text = 'Вы записаны \u2714\ufe0f'
         bot.send_message(chat_id, text, reply_markup=markup_menu)
     elif data['success'] == 'false':
-        msg = bot.reply_to(message, "Повтори")
+        msg = bot.reply_to(message, "Некорректный ввод.\nПовторите попытку")
         bot.register_next_step_handler(msg, reg_user)
     else:
-        bot.send_message(message.chat.id, "Ты уже есть", reply_markup=markup_menu)
+        bot.send_message(message.chat.id, "Вы уже записаны \u2714\ufe0f", reply_markup=markup_menu)
 
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if message.text == "1":
-      bot.send_message(message.chat.id, "Ну и нахуя", reply_markup=markup_menu)
-   elif message.text == "Расписание группы":
+   if message.text == "Расписание группы \ud83d\uddd3":
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
-   elif message.text == "Информация о вузе":
+   elif message.text == "Информация о вузе \ud83d\udca1":
       bot.send_message(message.chat.id, "Какая информация вам инетересна?", reply_markup=markup_info)
-   elif message.text == "Информация о корпусах":
+   elif message.text == "Информация о корпусах \ud83c\udfe6":
       bot.send_message(message.chat.id, "Выберете корпус", reply_markup=markup_corps)
    elif message.text == "Сегодня":
       day = get_day_of_week(True)
@@ -116,7 +114,7 @@ def handle_text(message):
    elif message.text == "Суббота":
       text = get_schedule('Сбт', message.from_user.id)
       bot.send_message(message.chat.id, text, reply_markup=markup_schedule)
-   elif message.text == "Основные сайты":
+   elif message.text == "Основные сайты \ud83d\udd11":
       keyboard = types.InlineKeyboardMarkup()
       url_button1 = types.InlineKeyboardButton(text="Личный кабинет студента", url="https://www.sfedu.ru/www/stat_pages22.show?p=STD/lks/D")
       url_button2 = types.InlineKeyboardButton(text="LMS", url="https://lms.sfedu.ru")
@@ -125,7 +123,7 @@ def handle_text(message):
       url_button5 = types.InlineKeyboardButton(text="Проектный офис ИКТИБ", url="https://proictis.sfedu.ru/")
       keyboard.add(url_button1, url_button2, url_button3, url_button4, url_button5)
       bot.send_message(message.chat.id, "Что вас инетересует?", reply_markup=keyboard)
-   elif message.text == "Группы Вконтакте":
+   elif message.text == "Группы Вконтакте \ud83d\udddd":
       keyboard = types.InlineKeyboardMarkup()
       keyboard.row_width = 1
       url_button1 = types.InlineKeyboardButton(text="Физическая культура в ИТА ЮФУ", url="https://vk.com/club101308251")
@@ -171,7 +169,7 @@ def handle_text(message):
       text = "Таганрог, ул. Шевченко, 2"
       bot.send_message(message.chat.id, text, reply_markup=markup_corps)
       bot.send_location(message.chat.id, latitude="47.204446", longitude="38.944437")
-   elif message.text == "Настройки":
+   elif message.text == "Настройки \u2692":
       markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
       markup_config.row("Группа: {}".format(group))
       markup_config.row("Назад")
@@ -180,7 +178,7 @@ def handle_text(message):
    elif message.text == "Группа: {}".format(group):
       msg = bot.send_message(message.chat.id, "Введите группу (Пример КТбо2-3)")
       bot.register_next_step_handler(msg, change_group)
-   elif message.text == "Собственное расписание":
+   elif message.text == "Собственное расписание \ud83d\udd8a":
       bot.send_message(message.chat.id, "Выберите день", reply_markup=gen_markup())
       # if message.text == "Пнд":
       #    bot.send_message(message.chat.id, "Выберите пару", reply_markup=markup_user_schedule_pair_count)
