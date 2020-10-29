@@ -14,7 +14,7 @@ server = Flask(__name__)
 TOKEN = config.token
 
 markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_menu.row('\xF0\x9F\x93\x92 Расписание группы')
+markup_menu.row(':ledger: Расписание группы')
 markup_menu.row('Собственное расписание\ud83d\udd8a')
 markup_menu.row('Информация о вузе\ud83d\udca1')
 markup_menu.row('Настройки \u2692')
@@ -81,7 +81,7 @@ def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if message.text == "\xF0\x9F\x93\x92 Расписание группы":
+   if message.text == ":ledger: Расписание группы":
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
    elif message.text == "Информация о вузе\ud83d\udca1":
@@ -240,10 +240,10 @@ def get_schedule(day, user_id):
    for idx, pair in enumerate(data['pairs'], start=0):
       del pair_list[:]
       if pair['pair_name']:
-         pair_list.append("\ud83d\udd14 Пара №{}: {} \n".format(idx+1, pair['time']))
-         pair_list.append('\ud83d\udd38' + pair['pair_name'] + '\n\n')
+         pair_list.append("Пара №{}: {} \n".format(idx+1, pair['time']))
+         pair_list.append(pair['pair_name'] + '\n\n')
       else:
-         pair_list.append("\ud83d\udd15 Пара №{}: Окно \n\n".format(idx+1))
+         pair_list.append("Пара №{}: Окно \n\n".format(idx+1))
       print(pair_list)
       schedule.append(pair_list[:])
       print(schedule)
