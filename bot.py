@@ -81,18 +81,18 @@ def reg_user(message):
 
     if data['success'] == 'true':
         text = 'Все окей'
-        bot.send_message(chat_id, text)
+        bot.send_message(chat_id, text, reply_markup=markup_menu)
     elif data['success'] == 'false':
         msg = bot.reply_to(message, "Повтори")
         bot.register_next_step_handler(msg, reg_user)
     else:
-        msg = bot.reply_to(message, "Ты уже есть")
-        bot.register_next_step_handler(msg, reg_user)
+        bot.send_message(message.chat.id, "Ты уже есть", reply_markup=markup_menu)
 
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
    global group
    group = "Неизвестно"
+   group = get_user_group(message.from_user.id)
    if message.text == "1":
       bot.send_message(message.chat.id, "Ну и нахуя", reply_markup=markup_menu)
    elif message.text == "Расписание группы":
@@ -184,8 +184,6 @@ def handle_text(message):
       bot.send_message(message.chat.id, text, reply_markup=markup_corps)
       bot.send_location(message.chat.id, latitude="47.204446", longitude="38.944437")
    elif message.text == "Настройки":
-      group = "Неизвестно"
-      group = get_user_group(message.from_user.id)
       markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
       markup_config.row("Группа: {}".format(group))
       markup_config.row("Назад")
@@ -198,8 +196,10 @@ def handle_text(message):
       bot.send_message(message.chat.id, "Выберите день", reply_markup=gen_markup())
       # if message.text == "Пнд":
       #    bot.send_message(message.chat.id, "Выберите пару", reply_markup=markup_user_schedule_pair_count)
-   else:
+   elif message.text == "Назад":
       bot.send_message(message.chat.id, "Вы вернулись назад", reply_markup=markup_menu)
+   else:
+      bot.send_message(message.chat.id, "Некорректный ввод")
 
 def change_group(message):
     url = "http://ictib.host1809541.hostland.pro/index.php/api/change_user_group"
