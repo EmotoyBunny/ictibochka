@@ -81,7 +81,7 @@ def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if message.text == 'Расписание группы \ud83d\uddd3':
+   if message.text in "Расписание группы \ud83d\uddd3":
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
    elif message.text == "Информация о вузе \ud83d\udca1":
@@ -172,17 +172,17 @@ def handle_text(message):
    elif message.text == "Настройки \u2692":
       markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
       markup_config.row("Группа: {}".format(group))
-      markup_config.row("Назад")
-      text = "Настройки"
+      markup_config.row("\u21a9\ufe0f Назад")
+      text = "Настройки \u2692"
       bot.send_message(message.chat.id, text, reply_markup=markup_config)
-   elif message.text == "Группа: {}".format(group):
+   elif message.text == "\ud83d\udee0 Группа: {}".format(group):
       msg = bot.send_message(message.chat.id, "Введите группу (Пример КТбо2-3)")
       bot.register_next_step_handler(msg, change_group)
    elif message.text == "Собственное расписание \ud83d\udd8a":
       bot.send_message(message.chat.id, "Выберите день", reply_markup=gen_markup())
       # if message.text == "Пнд":
       #    bot.send_message(message.chat.id, "Выберите пару", reply_markup=markup_user_schedule_pair_count)
-   elif message.text == "\u21a9\ufe0f Назад":
+   elif message.text == "Назад \u21a9\ufe0f":
       bot.send_message(message.chat.id, "Вы вернулись назад", reply_markup=markup_menu)
    else:
       bot.send_message(message.chat.id, "\u274c Некорректный ввод")
@@ -207,7 +207,7 @@ def change_group(message):
         group = message.text
         markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup_config.row("\ud83d\udee0 Группа: {}".format(group))
-        markup_config.row("\u21a9\ufe0f Назад")
+        markup_config.row("Назад  \u21a9\ufe0f")
         bot.send_message(chat_id, text, reply_markup=markup_config)
     elif data['success'] == 'false':
         msg = bot.reply_to(message, "\u274c Некорректный ввод")
