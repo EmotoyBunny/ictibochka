@@ -207,7 +207,7 @@ def change_group(message):
         group = message.text
         markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup_config.row("\U0001F527 Группа: {}".format(group))
-        markup_config.row("Назад  \u21a9\ufe0f")
+        markup_config.row("Назад \u21a9\ufe0f")
         bot.send_message(chat_id, text, reply_markup=markup_config)
     elif data['success'] == 'false':
         msg = bot.reply_to(message, "\u274c Некорректный ввод")
