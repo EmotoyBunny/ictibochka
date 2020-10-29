@@ -14,39 +14,27 @@ server = Flask(__name__)
 TOKEN = config.token
 
 markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_menu.row('Расписание группы')
-markup_menu.row('Собственное расписание')
-markup_menu.row('Информация о вузе')
-markup_menu.row('Настройки')
+markup_menu.row('Расписание группы \ud83d\uddd3')
+markup_menu.row('Собственное расписание \ud83d\udd8a')
+markup_menu.row('Информация о вузе \ud83d\udca1')
+markup_menu.row('Настройки \u2692')
 
 markup_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup_schedule.row('Сегодня', 'Завтра')
 markup_schedule.row('Понедельник', 'Вторник', 'Среда')
 markup_schedule.row('Четверг', 'Пятница', 'Суббота')
-markup_schedule.row('Назад')
+markup_schedule.row('Назад \u21a9\ufe0f')
 
 markup_info = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_info.row('Основные сайты')
-markup_info.row('Группы Вконтакте')
-markup_info.row('Информация о корпусах')
-markup_info.row('Назад')
+markup_info.row('Основные сайты \ud83d\udd11')
+markup_info.row('Группы Вконтакте \ud83d\udddd')
+markup_info.row('Информация о корпусах \ud83c\udfe6')
+markup_info.row('Назад \u21a9\ufe0f')
 
 markup_corps = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup_corps.row('Корпус А', 'Корпус Б', 'Корпус В', 'Корпус Г')
 markup_corps.row('Корпус Д','Корпус Е','Корпус И','Корпус К',)
-markup_corps.row('Назад')
-
-markup_user_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_user_schedule.row('Удалить пару', 'Редактировать')
-markup_user_schedule.row('Назад')
-
-# markup_user_schedule_day = types.InlineKeyboardMarkup(resize_keyboard=True)
-# markup_user_schedule_day.row('Пнд', 'Втр', 'Срд')
-# markup_user_schedule_day.row('Чтв', 'Птн', 'Сбт')
-
-# markup_user_schedule_pair_count = types.InlineKeyboardMarkup(resize_keyboard=True)
-# markup_user_schedule_pair_count.row('1', '2', '3')
-# markup_user_schedule_pair_count.row('4', '5', '6')
+markup_corps.row('Назад \u21a9\ufe0f')
 
 def gen_markup():
    markup = types.InlineKeyboardMarkup()
@@ -196,10 +184,10 @@ def handle_text(message):
       bot.send_message(message.chat.id, "Выберите день", reply_markup=gen_markup())
       # if message.text == "Пнд":
       #    bot.send_message(message.chat.id, "Выберите пару", reply_markup=markup_user_schedule_pair_count)
-   elif message.text == "Назад":
+   elif message.text == "\u21a9\ufe0f Назад":
       bot.send_message(message.chat.id, "Вы вернулись назад", reply_markup=markup_menu)
    else:
-      bot.send_message(message.chat.id, "Некорректный ввод")
+      bot.send_message(message.chat.id, "\u274c Некорректный ввод", reply_markup = True)
 
 def change_group(message):
     url = "http://ictib.host1809541.hostland.pro/index.php/api/change_user_group"
@@ -217,17 +205,17 @@ def change_group(message):
 
     if data['success'] == 'true':
         global group
-        text = 'Все окей'
+        text = 'Группа была изменена'
         group = message.text
         markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup_config.row("Группа: {}".format(group))
-        markup_config.row("Назад")
+        markup_config.row("\ud83d\udee0 Группа: {}".format(group))
+        markup_config.row("\u21a9\ufe0f Назад")
         bot.send_message(chat_id, text, reply_markup=markup_config)
     elif data['success'] == 'false':
-        msg = bot.reply_to(message, "Повтори")
+        msg = bot.reply_to(message, "\u274c Некорректный ввод")
         bot.register_next_step_handler(msg, change_group)
     else:
-        msg = bot.reply_to(message, "Ты уже есть")
+        msg = bot.reply_to(message, "\u2b55\ufe0f Группа уже указана")
         bot.register_next_step_handler(msg, change_group)
 
 
@@ -254,10 +242,10 @@ def get_schedule(day, user_id):
    for idx, pair in enumerate(data['pairs'], start=0):
       del pair_list[:]
       if pair['pair_name']:
-         pair_list.append("Пара №{}: {} \n".format(idx+1, pair['time']))
-         pair_list.append(pair['pair_name'] + '\n\n')
+         pair_list.append("\ud83d\udd14 Пара №{}: {} \n".format(idx+1, pair['time']))
+         pair_list.append('\ud83d\udd38' + pair['pair_name'] + '\n\n')
       else:
-         pair_list.append("Пара №{}: Окно \n\n".format(idx+1))
+         pair_list.append("\ud83d\udd15 Пара №{}: Окно \n\n".format(idx+1))
       print(pair_list)
       schedule.append(pair_list[:])
       print(schedule)
@@ -267,7 +255,7 @@ def get_schedule(day, user_id):
    for schedules in schedule:
       text += '' + ''.join(schedules)
    
-   text = "Дата - {}\nНеделя - {}\n\n{}".format(data['day'], data['week'], text)
+   text = "\ud83d\uddd3 Дата - {}\n\u25b6\ufe0f Неделя - {}\n\n{}".format(data['day'], data['week'], text)
 
    # data = json.dumps(data) 
    return text
