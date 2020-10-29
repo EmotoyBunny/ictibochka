@@ -17,7 +17,7 @@ markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup_menu.row('Расписание группы \U0001F4D2')
 markup_menu.row('Собственное расписание \U0001F4DD')
 markup_menu.row('Информация о вузе \U0001F4A1')
-markup_menu.row('Настройки \U0001F527')
+markup_menu.row('Настройки \u2692')
 
 markup_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup_schedule.row('Сегодня', 'Завтра')
@@ -173,7 +173,7 @@ def handle_text(message):
       markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
       markup_config.row("\U0001F527 Группа: {}".format(group))
       markup_config.row("Назад \u21a9\ufe0f ")
-      text = "Настройки \U0001F527"
+      text = "Настройки \u2692"
       bot.send_message(message.chat.id, text, reply_markup=markup_config)
    elif message.text == "\U0001F527 Группа: {}".format(group):
       msg = bot.send_message(message.chat.id, "Введите группу (Пример КТбо2-3)")
@@ -253,7 +253,7 @@ def get_schedule(day, user_id):
    for schedules in schedule:
       text += '' + ''.join(schedules)
    
-   text = "\U0001F4C5 Дата - {}\nНеделя - {}\n\n{}".format(data['day'], data['week'], text)
+   text = "\U0001F4C5 Дата - {}\n\U0001F534Неделя - {}\n\n{}".format(data['day'], data['week'], text)
 
    # data = json.dumps(data) 
    return text
