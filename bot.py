@@ -185,7 +185,7 @@ def handle_text(message):
    elif message.text == "\u21a9\ufe0f Назад":
       bot.send_message(message.chat.id, "Вы вернулись назад", reply_markup=markup_menu)
    else:
-      bot.send_message(message.chat.id, "\u274c Некорректный ввод", reply_markup = True)
+      bot.send_message(message.chat.id, "\u274c Некорректный ввод")
 
 def change_group(message):
     url = "http://ictib.host1809541.hostland.pro/index.php/api/change_user_group"
