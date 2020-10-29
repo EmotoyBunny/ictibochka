@@ -129,8 +129,14 @@ def handle_text(message):
       text = get_schedule('Сбт', message.from_user.id)
       bot.send_message(message.chat.id, text, reply_markup=markup_schedule)
    elif message.text == "Основные сайты":
-      text = '\u25b6\ufe0f [Личный кабинет студента](https://sfedu.ru/www/stat_pages22.show?p=STD/lks/D)\n\u25b6\ufe0f [LMS](https://lms.sfedu.ru)\n\u25b6\ufe0f [БРС](https://grade.sfedu.ru/)\n\u25b6\ufe0f [Сайт ИКТИБа](http://ictis.sfedu.ru/)\n\u25b6\ufe0f [Проектный офис ИКТИБ](https://proictis.sfedu.ru/)'
-      bot.send_message(message.chat.id, text, reply_markup=markup_info, parse_mode='MarkdownV2')
+       keyboard = types.InlineKeyboardMarkup()
+      url_button1 = types.InlineKeyboardButton(text="Личный кабинет студента", url="https://www.sfedu.ru/www/stat_pages22.show?p=STD/lks/D")
+      url_button2 = types.InlineKeyboardButton(text="LMS", url="https://lms.sfedu.ru")
+      url_button3 = types.InlineKeyboardButton(text="БРС", url="https://grade.sfedu.ru/")
+      url_button4 = types.InlineKeyboardButton(text="Сайт ИКТИБа", url="http://ictis.sfedu.ru/")
+      url_button5 = types.InlineKeyboardButton(text="Проектный офис ИКТИБ", url="https://proictis.sfedu.ru/")
+      keyboard.add(url_button1, url_button2, url_button3, url_button4, url_button5)
+      bot.send_message(message.chat.id, "Что вас инетересует?", reply_markup=keyboard)
    elif message.text == "Группы Вконтакте":
       keyboard = types.InlineKeyboardMarkup()
       keyboard.row_width = 1
