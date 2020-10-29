@@ -14,7 +14,7 @@ server = Flask(__name__)
 TOKEN = config.token
 
 markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_menu.row('Расписание группы \ud83d\uddd3')
+markup_menu.row('Расписание группы' + '\ud83d\uddd3')
 markup_menu.row('Собственное расписание \ud83d\udd8a')
 markup_menu.row('Информация о вузе \ud83d\udca1')
 markup_menu.row('Настройки \u2692')
@@ -81,7 +81,7 @@ def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if message.text in 'Расписание группы \ud83d\uddd3':
+   if message.text == 'Расписание группы' + '\ud83d\uddd3':
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
    elif message.text == "Информация о вузе \ud83d\udca1":
