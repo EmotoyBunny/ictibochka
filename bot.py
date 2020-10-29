@@ -14,9 +14,9 @@ server = Flask(__name__)
 TOKEN = config.token
 
 markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_menu.row('Расписание группы \ud83d\uddd3')
-markup_menu.row('Собственное расписание \ud83d\udd8a')
-markup_menu.row('Информация о вузе \ud83d\udca1')
+markup_menu.row('Расписание группы\ud83d\uddd3')
+markup_menu.row('Собственное расписание\ud83d\udd8a')
+markup_menu.row('Информация о вузе\ud83d\udca1')
 markup_menu.row('Настройки \u2692')
 
 markup_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
