@@ -81,7 +81,7 @@ def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if message.text in "Расписание группы \ud83d\uddd3":
+   if message.text in 'Расписание группы \ud83d\uddd3':
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
    elif message.text == "Информация о вузе \ud83d\udca1":
