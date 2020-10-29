@@ -132,8 +132,19 @@ def handle_text(message):
       text = '\u25b6\ufe0f [Личный кабинет студента](https://sfedu.ru/www/stat_pages22.show?p=STD/lks/D)\n\u25b6\ufe0f [LMS](https://lms.sfedu.ru)\n\u25b6\ufe0f [БРС](https://grade.sfedu.ru/)\n\u25b6\ufe0f [Сайт ИКТИБа](http://ictis.sfedu.ru/)\n\u25b6\ufe0f [Проектный офис ИКТИБ](https://proictis.sfedu.ru/)'
       bot.send_message(message.chat.id, text, reply_markup=markup_info, parse_mode='MarkdownV2')
    elif message.text == "Группы Вконтакте":
-      text = '\u27A1\ufe0f [Физическая культура в ИТА ЮФУ](https://vk.com/club101308251)\n\u27A1\ufe0f [Подслушано в ЮФУ](https://vk.com/overhearsfedu)\n\u27A1\ufe0f [ИКТИБ ЮФУ](https://vk.com/ictis_sfedu)\n\u27A1\ufe0f [Студенческий клуб ИТА ЮФУ \(г\. Таганрог\)](https://vk.com/studclub_tgn)\n\u27A1\ufe0f  [Студенческий киберспортивный клуб ЮФУ](https://vk.com/esports_sfedu)\n\u27A1\ufe0f [Культура здоровья в ИТА ЮФУ](https://vk.com/club150688847)\n\u27A1\ufe0f [Первокурснику](https://vk.com/1kurs_ita_2019)\n\u27A1\ufe0f [Технологии \+ Проекты \+ Инновации ИКТИБ](https://vk.com/proictis)\n\u27A1\ufe0f [Волонтерский центр ИКТИБ ЮФУ](https://vk.com/ictis_vol)'
-      bot.send_message(message.chat.id, text, reply_markup=markup_info, parse_mode='MarkdownV2')
+      keyboard = types.InlineKeyboardMarkup()
+      keyboard.row_width = 1
+      url_button1 = types.InlineKeyboardButton(text="Физическая культура в ИТА ЮФУ", url="https://vk.com/club101308251")
+      url_button2 = types.InlineKeyboardButton(text="Подслушано в ЮФУ", url="https://vk.com/overhearsfedu")
+      url_button3 = types.InlineKeyboardButton(text="ИКТИБ ЮФУ", url="https://vk.com/ictis_sfedu")
+      url_button4 = types.InlineKeyboardButton(text="Студенческий клуб ИТА ЮФУ (г. Таганрог)", url="https://vk.com/studclub_tgn")
+      url_button5 = types.InlineKeyboardButton(text="Студенческий киберспортивный клуб ЮФУ", url="https://vk.com/esports_sfedu")
+      url_button6 = types.InlineKeyboardButton(text="Культура здоровья в ИТА ЮФУ", url="https://vk.com/club150688847")
+      url_button7 = types.InlineKeyboardButton(text="Первокурснику", url="https://vk.com/1kurs_ita_2019")
+      url_button8 = types.InlineKeyboardButton(text="Технологии + Проекты + Инновации ИКТИБ", url="https://vk.com/proictis")
+      url_button9 = types.InlineKeyboardButton(text="Волонтерский центр ИКТИБ ЮФУ", url="https://vk.com/ictis_vol")
+      keyboard.add(url_button1, url_button2, url_button3, url_button4, url_button5, url_button6, url_button7, url_button8, url_button9)
+      bot.send_message(message.chat.id, "Что вас инетересует?", reply_markup=keyboard)
    elif message.text == "Корпус А":
       text = "Таганрог, улица Чехова, 22"
       bot.send_message(message.chat.id, text, reply_markup=markup_corps)
