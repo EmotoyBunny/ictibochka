@@ -14,7 +14,7 @@ server = Flask(__name__)
 TOKEN = config.token
 
 markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_menu.row('Расписание группы \xF0\x9F\x91\xBE')
+markup_menu.row('Расписание группы \ud83d\uddd3')
 markup_menu.row('Собственное расписание \ud83d\udd8a')
 markup_menu.row('Информация о вузе \ud83d\udca1')
 markup_menu.row('Настройки \u2692')
@@ -81,12 +81,12 @@ def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if (message.text in 'Расписание группы \xF0\x9F\x91\xBE'):
+   if message.text == "Расписание группы\ud83d\uddd3":
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
-   elif message.text == "Информация о вузе \ud83d\udca1":
+   elif message.text == "Информация о вузе\ud83d\udca1":
       bot.send_message(message.chat.id, "Какая информация вам инетересна?", reply_markup=markup_info)
-   elif message.text == "Информация о корпусах \ud83c\udfe6":
+   elif message.text == "Информация о корпусах\ud83c\udfe6":
       bot.send_message(message.chat.id, "Выберете корпус", reply_markup=markup_corps)
    elif message.text == "Сегодня":
       day = get_day_of_week(True)
@@ -114,7 +114,7 @@ def handle_text(message):
    elif message.text == "Суббота":
       text = get_schedule('Сбт', message.from_user.id)
       bot.send_message(message.chat.id, text, reply_markup=markup_schedule)
-   elif message.text == "Основные сайты \ud83d\udd11":
+   elif message.text == "Основные сайты\ud83d\udd11":
       keyboard = types.InlineKeyboardMarkup()
       url_button1 = types.InlineKeyboardButton(text="Личный кабинет студента", url="https://www.sfedu.ru/www/stat_pages22.show?p=STD/lks/D")
       url_button2 = types.InlineKeyboardButton(text="LMS", url="https://lms.sfedu.ru")
@@ -123,7 +123,7 @@ def handle_text(message):
       url_button5 = types.InlineKeyboardButton(text="Проектный офис ИКТИБ", url="https://proictis.sfedu.ru/")
       keyboard.add(url_button1, url_button2, url_button3, url_button4, url_button5)
       bot.send_message(message.chat.id, "Что вас инетересует?", reply_markup=keyboard)
-   elif message.text == "Группы Вконтакте \ud83d\udddd":
+   elif message.text == "Группы Вконтакте\ud83d\udddd":
       keyboard = types.InlineKeyboardMarkup()
       keyboard.row_width = 1
       url_button1 = types.InlineKeyboardButton(text="Физическая культура в ИТА ЮФУ", url="https://vk.com/club101308251")
@@ -171,8 +171,8 @@ def handle_text(message):
       bot.send_location(message.chat.id, latitude="47.204446", longitude="38.944437")
    elif message.text == "Настройки \u2692":
       markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
-      markup_config.row("Группа: {}".format(group))
-      markup_config.row("\u21a9\ufe0f Назад")
+      markup_config.row("\ud83d\udee0 Группа: {}".format(group))
+      markup_config.row("Назад \u21a9\ufe0f ")
       text = "Настройки \u2692"
       bot.send_message(message.chat.id, text, reply_markup=markup_config)
    elif message.text == "\ud83d\udee0 Группа: {}".format(group):
