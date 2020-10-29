@@ -14,10 +14,10 @@ server = Flask(__name__)
 TOKEN = config.token
 
 markup_menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_menu.row('\U0001F4D2 Расписание группы')
-markup_menu.row('Собственное расписание\ud83d\udd8a')
-markup_menu.row('Информация о вузе\ud83d\udca1')
-markup_menu.row('Настройки \u2692')
+markup_menu.row('Расписание группы \U0001F4D2')
+markup_menu.row('Собственное расписание \U0001F4DD')
+markup_menu.row('Информация о вузе \U0001F4A1')
+markup_menu.row('Настройки \U0001F527')
 
 markup_schedule = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup_schedule.row('Сегодня', 'Завтра')
@@ -26,9 +26,9 @@ markup_schedule.row('Четверг', 'Пятница', 'Суббота')
 markup_schedule.row('Назад \u21a9\ufe0f')
 
 markup_info = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markup_info.row('Основные сайты \ud83d\udd11')
-markup_info.row('Группы Вконтакте \ud83d\udddd')
-markup_info.row('Информация о корпусах \ud83c\udfe6')
+markup_info.row('Основные сайты \U0001F4CC')
+markup_info.row('Группы Вконтакте \U0001F4CC')
+markup_info.row('Информация о корпусах \U0001F3E3')
 markup_info.row('Назад \u21a9\ufe0f')
 
 markup_corps = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -81,12 +81,12 @@ def handle_text(message):
    global group
    group = "Неизвестно"
    group = get_user_group(message.from_user.id)
-   if message.text == "\U0001F4D2 Расписание группы":
+   if message.text == "Расписание группы \U0001F4D2 ":
       get_week_schedule(message.from_user.id)
       bot.send_message(message.chat.id, "Выберите день", reply_markup=markup_schedule)
-   elif message.text == "Информация о вузе\ud83d\udca1":
+   elif message.text == "Информация о вузе \U0001F4A1":
       bot.send_message(message.chat.id, "Какая информация вам инетересна?", reply_markup=markup_info)
-   elif message.text == "Информация о корпусах\ud83c\udfe6":
+   elif message.text == "Информация о корпусах \U0001F3E3":
       bot.send_message(message.chat.id, "Выберете корпус", reply_markup=markup_corps)
    elif message.text == "Сегодня":
       day = get_day_of_week(True)
@@ -114,7 +114,7 @@ def handle_text(message):
    elif message.text == "Суббота":
       text = get_schedule('Сбт', message.from_user.id)
       bot.send_message(message.chat.id, text, reply_markup=markup_schedule)
-   elif message.text == "Основные сайты\ud83d\udd11":
+   elif message.text == "Основные сайты \U0001F4CC":
       keyboard = types.InlineKeyboardMarkup()
       url_button1 = types.InlineKeyboardButton(text="Личный кабинет студента", url="https://www.sfedu.ru/www/stat_pages22.show?p=STD/lks/D")
       url_button2 = types.InlineKeyboardButton(text="LMS", url="https://lms.sfedu.ru")
@@ -123,7 +123,7 @@ def handle_text(message):
       url_button5 = types.InlineKeyboardButton(text="Проектный офис ИКТИБ", url="https://proictis.sfedu.ru/")
       keyboard.add(url_button1, url_button2, url_button3, url_button4, url_button5)
       bot.send_message(message.chat.id, "Что вас инетересует?", reply_markup=keyboard)
-   elif message.text == "Группы Вконтакте\ud83d\udddd":
+   elif message.text == "Группы Вконтакте \U0001F4CC":
       keyboard = types.InlineKeyboardMarkup()
       keyboard.row_width = 1
       url_button1 = types.InlineKeyboardButton(text="Физическая культура в ИТА ЮФУ", url="https://vk.com/club101308251")
@@ -171,14 +171,14 @@ def handle_text(message):
       bot.send_location(message.chat.id, latitude="47.204446", longitude="38.944437")
    elif message.text == "Настройки \u2692":
       markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
-      markup_config.row("\ud83d\udee0 Группа: {}".format(group))
+      markup_config.row("\U0001F527 Группа: {}".format(group))
       markup_config.row("Назад \u21a9\ufe0f ")
-      text = "Настройки \u2692"
+      text = "Настройки \U0001F527"
       bot.send_message(message.chat.id, text, reply_markup=markup_config)
-   elif message.text == "\ud83d\udee0 Группа: {}".format(group):
+   elif message.text == "\U0001F527 Группа: {}".format(group):
       msg = bot.send_message(message.chat.id, "Введите группу (Пример КТбо2-3)")
       bot.register_next_step_handler(msg, change_group)
-   elif message.text == "Собственное расписание \ud83d\udd8a":
+   elif message.text == "Собственное расписание \U0001F4DD":
       bot.send_message(message.chat.id, "Выберите день", reply_markup=gen_markup())
       # if message.text == "Пнд":
       #    bot.send_message(message.chat.id, "Выберите пару", reply_markup=markup_user_schedule_pair_count)
@@ -206,7 +206,7 @@ def change_group(message):
         text = 'Группа была изменена'
         group = message.text
         markup_config = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup_config.row("\ud83d\udee0 Группа: {}".format(group))
+        markup_config.row("\U0001F527 Группа: {}".format(group))
         markup_config.row("Назад  \u21a9\ufe0f")
         bot.send_message(chat_id, text, reply_markup=markup_config)
     elif data['success'] == 'false':
@@ -240,10 +240,10 @@ def get_schedule(day, user_id):
    for idx, pair in enumerate(data['pairs'], start=0):
       del pair_list[:]
       if pair['pair_name']:
-         pair_list.append("Пара №{}: {} \n".format(idx+1, pair['time']))
+         pair_list.append("\U0001F514 Пара №{}: {} \n".format(idx+1, pair['time']))
          pair_list.append(pair['pair_name'] + '\n\n')
       else:
-         pair_list.append("Пара №{}: Окно \n\n".format(idx+1))
+         pair_list.append("\U0001F515 Пара №{}: Окно \n\n".format(idx+1))
       print(pair_list)
       schedule.append(pair_list[:])
       print(schedule)
@@ -253,7 +253,7 @@ def get_schedule(day, user_id):
    for schedules in schedule:
       text += '' + ''.join(schedules)
    
-   text = "\ud83d\uddd3 Дата - {}\n\u25b6\ufe0f Неделя - {}\n\n{}".format(data['day'], data['week'], text)
+   text = "\U0001F4C5 Дата - {}\nНеделя - {}\n\n{}".format(data['day'], data['week'], text)
 
    # data = json.dumps(data) 
    return text
